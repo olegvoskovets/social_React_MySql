@@ -1,0 +1,35 @@
+@import "../../style.scss";
+
+.gamesUser {
+  @include themify($themes) {
+    .container2 {
+      padding: 20px 70px;
+
+      .game {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 500;
+        font-size: 16px;
+        padding: 20px;
+        margin-bottom: 10px;
+        color: themed("textColor");
+
+        .nomer {
+        }
+        .date {
+          display: flex;
+          justify-content: space-between;
+
+          p {
+            margin-right: 10px;
+          }
+          span {
+          }
+        }
+        .count {
+        }
+      }
+    }
+  }
+}

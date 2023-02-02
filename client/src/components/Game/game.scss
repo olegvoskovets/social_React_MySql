@@ -1,0 +1,34 @@
+@import "../../style.scss";
+
+.container2 {
+  @include themify($themes) {
+    padding-top: 20px;
+    .game {
+      //   width: 400px;
+      //   height: 400px;
+      //   position: absolute;
+      //   background: rgb(245, 242, 242);
+      //   top: 50%;
+      //   left: 50%;
+      //   margin-right: -50%;
+      //   transform: translate(-50%, -50%);
+      padding: 50px;
+      margin-left: auto;
+      margin-right: auto;
+      display: table;
+
+      -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+      -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+      box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+      border-radius: 10px;
+      background-color: themed("bg");
+    }
+    .btn {
+      width: 100%;
+    }
+    button {
+      width: 90px;
+      margin: 5px;
+    }
+  }
+}

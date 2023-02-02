@@ -1,0 +1,167 @@
+@import "../../style.scss";
+
+.myPage {
+  @include themify($themes) {
+    display: flex;
+    gap: 20px;
+    color: themed("textColor");
+
+    .myPage_left {
+      flex: 3;
+      display: flex;
+      flex-direction: column;
+      width: 85%;
+      gap: 15px;
+      .about_myself {
+        display: flex;
+        background-color: themed("bg");
+        padding: 15px;
+        border-radius: 10px;
+      }
+      .photos {
+        display: flex;
+        background-color: themed("bg");
+        padding: 15px;
+        border-radius: 10px;
+      }
+      .friendss {
+        display: flex;
+        background-color: themed("bg");
+        padding: 15px;
+        border-radius: 10px;
+      }
+    }
+    .myPage_rigth {
+      flex: 5;
+      width: 85%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      .create_post {
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        background-color: themed("bg");
+        padding: 10px 10px 5px 10px;
+        border-radius: 10px;
+
+        .myPage_rigth_header {
+          display: flex;
+          flex-direction: row;
+          gap: 15px;
+          border-bottom: 1px solid themed("bgSoft");
+          padding-bottom: 5px;
+          .rigth_profile_img {
+            img {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+          }
+          .rigth_TextareaAutosize {
+            width: 100%;
+
+            .add_post_text {
+              width: 100%;
+              resize: none;
+              display: inline-block;
+              overflow: hidden;
+              min-width: 150px;
+              box-sizing: border-box;
+              border-radius: 15px;
+              padding: 5px 15px 5px 15px;
+              font-size: 18px;
+              background-color: themed("bgSoft");
+              color: themed("textColor");
+              border: none;
+            }
+          }
+        }
+        .myPage_rigth_btn {
+          display: flex;
+          gap: 10px;
+          span {
+            // flex-direction: row;
+            flex: 1;
+            gap: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 10px;
+            border-radius: 5px;
+
+            cursor: pointer;
+          }
+          span:hover {
+            background-color: themed("bgSoft");
+          }
+        }
+      }
+      .posts_filter {
+        display: flex;
+        flex-direction: column;
+        background-color: themed("bg");
+        padding: 5px 10px;
+        border-radius: 10px;
+        gap: 5px;
+        .posts_filter_header {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          border-bottom: 1px solid themed("bgSoft");
+          padding: 5px 10px;
+          .posts_filter_text {
+            flex: 2;
+            font-size: 24px;
+          }
+          .posts_filter_context {
+            flex: 3;
+            display: flex;
+            gap: 5px;
+            span {
+              flex: 1;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 5px;
+              cursor: pointer;
+              padding: 5px;
+              border-radius: 5px;
+            }
+            span:hover {
+              background: themed("bgSoft");
+            }
+          }
+        }
+        .posts_filter_footer {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          span {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+          span:hover {
+            background: themed("bgSoft");
+          }
+        }
+      }
+      .my_posts {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background-color: themed("bg");
+        padding: 15px;
+        border-radius: 10px;
+      }
+    }
+  }
+}

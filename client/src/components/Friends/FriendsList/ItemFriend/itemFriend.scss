@@ -1,0 +1,45 @@
+@import "../../../../style.scss";
+
+.item_friend {
+  @include themify($themes) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 180px;
+    height: 250px;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 5px;
+    background: themed("bg");
+    box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+
+    .item_friend_img {
+      height: 80%;
+      display: flex;
+      align-items: center;
+      .img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+    }
+    .item_friend_info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 400;
+      padding-bottom: 8px;
+    }
+    .item_friend_info:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  .absolute {
+    position: absolute;
+    bottom: -180px;
+  }
+}

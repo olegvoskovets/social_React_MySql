@@ -1,0 +1,26 @@
+@import "../../style.scss";
+
+.home {
+  @include themify($themes) {
+    // height: 100vh;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);
+    display: flex;
+    justify-content: center;
+    background-color: themed("bgSoft");
+    color: themed("textColor");
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .container_home {
+    width: 70%;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}

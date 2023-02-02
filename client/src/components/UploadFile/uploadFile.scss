@@ -1,0 +1,52 @@
+.cover__pic {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  .hidden {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    line-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+  }
+
+  .image {
+    .cover {
+      border: 1px solid grey;
+      height: 250px;
+      position: relative;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .profile {
+      width: 150px;
+      height: 150px;
+      border: 1px solid grey;
+      border-radius: 50%;
+      object-fit: cover;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      top: 240px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+  }
+  .button {
+    display: flex;
+    justify-content: space-around;
+  }
+}

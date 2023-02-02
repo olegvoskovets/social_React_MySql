@@ -1,0 +1,78 @@
+@import "../../style.scss";
+
+.navbar {
+  @include themify($themes) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 50px;
+    border-bottom: 1px solid themed("border");
+    position: sticky;
+    top: 0;
+    background-color: themed("bg");
+    color: themed("textColor");
+    z-index: 10;
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+
+      span {
+        font-weight: bold;
+        font-size: 20px;
+        color: themed("logo");
+      }
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid themed("border");
+        border-radius: 5px;
+        padding: 5px;
+        input {
+          height: 20px;
+          margin-bottom: 0;
+          border: none;
+          width: 500px;
+          background-color: transparent;
+          color: themed("textColor");
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-weight: 500;
+      .game {
+        font-weight: 300;
+        font-size: 16px;
+        color: themed("logo");
+      }
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .auth {
+          padding: 5px;
+          border-radius: 5px;
+          border: 1px solid themed("border");
+          background-color: transparent;
+          color: themed("textColor");
+          font-size: 12px;
+          font-weight: 200;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

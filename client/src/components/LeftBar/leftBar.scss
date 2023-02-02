@@ -1,0 +1,91 @@
+@import "../../style.scss";
+
+.leftBar {
+  @include themify($themes) {
+    width: 15%;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);
+    overflow: scroll;
+
+    background-color: themed("bgSoft");
+    color: themed("textColor");
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .container2 {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      hr {
+        border: none;
+        margin: 20px 0;
+        height: 0.5px;
+        background-color: themed("border");
+      }
+      .menu {
+        -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background-color: themed("bg");
+        border-radius: 10px;
+
+        span {
+          font-size: 16px;
+        }
+        .user {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          span {
+            font-size: 14px;
+            //font-weight: 300;
+
+            color: themed("logo");
+          }
+        }
+
+        .item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          .item_Link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: themed("textColor");
+            img {
+              width: 30px;
+              height: 30px;
+            }
+            span {
+              font-size: 14px;
+            }
+          }
+
+          img {
+            width: 30px;
+            height: 30px;
+          }
+          span {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}

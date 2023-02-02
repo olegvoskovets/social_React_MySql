@@ -1,0 +1,56 @@
+@import "../../../style.scss";
+
+.friendsListRequests {
+  @include themify($themes) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    .friendsListRequests_header {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid themed("bg");
+
+      //   position: sticky;
+      //   top: 80px;
+      //   height: calc(100px - 70px);
+      //   z-index: 30;
+
+      .friendsListRequests-text {
+        width: 100%;
+        display: flex;
+        flex: 2;
+        align-items: center;
+        justify-content: center;
+      }
+      .search {
+        width: 100%;
+        display: flex;
+        flex: 5;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid themed("border");
+        border-radius: 5px;
+        padding: 5px;
+        input {
+          height: 24px;
+          margin: 0;
+          border-radius: 5px;
+          border: none;
+          background-color: transparent;
+          color: themed("textColor");
+        }
+      }
+    }
+
+    .friendsListRequests_context {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+  }
+}

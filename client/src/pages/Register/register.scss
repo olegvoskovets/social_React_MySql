@@ -1,0 +1,39 @@
+.register {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: url("../../../public/images/1251087_760x500.jpg");
+    background-size: cover;
+  
+    .registerForm {
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0px 8px 32px 0 rgba(0, 0, 255, 0.3);
+      backdrop-filter: blur(2px);
+      padding: 0 16px 16px 16px;
+      border-radius: 16px;
+      .registerTitle {
+        display: flex;
+        justify-content: center;
+      }
+      .socialregister {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        height: 20px;
+        font-size: 20px;
+        color: white;
+        .pointer {
+          cursor: pointer;
+        }
+      }
+      .info{
+          margin-top: 10px;
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+      }
+    }
+  }

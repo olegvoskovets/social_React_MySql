@@ -1,0 +1,167 @@
+@import "../../../style.scss";
+
+.comment {
+  @include themify($themes) {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    .comment_left {
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+    .comment_right {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      .comment_right_block {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        .comment_right_context {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          width: fit-content;
+          background: themed("bgSoft");
+          border-radius: 20px;
+          position: relative;
+          padding: 5px 20px 5px 20px;
+          //color: themed("textColor");
+          font-size: 16px;
+          .comment_right_avtor_name {
+            font-size: 16px;
+            font-weight: bold;
+            color: themed("textColor");
+          }
+          .comment_right_avtor_name:hover {
+            text-decoration: underline;
+            cursor: pointer;
+          }
+          .comment_right_comment {
+            display: flex;
+            align-items: center;
+          }
+          .likes {
+            position: absolute;
+            bottom: -5px;
+            right: -10px;
+            width: fit-content;
+            height: 16px;
+            border-radius: 10px;
+            background: themed("borLikes");
+            display: flex;
+            align-items: center;
+
+            //  gap: 3px;
+            padding: 2px;
+            cursor: pointer;
+
+            .img {
+              height: 17px;
+              width: 17px;
+              margin-bottom: 1px;
+              background: rgb(42, 181, 199);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              color: themed("textColor");
+              .icon {
+                width: 14px;
+                height: 14px;
+                padding-left: 2px;
+                display: flex;
+                justify-content: center;
+              }
+
+              .visibleProfile {
+                position: absolute;
+                top: 25px;
+                display: flex;
+                flex-direction: column;
+                width: max-content;
+                background: themed("borLikes"); //borLikes
+                padding: 10px;
+                border-radius: 10px;
+                z-index: 10;
+                opacity: 0.8;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2),
+                  0 4px 6px rgba(0, 0, 0, 0.2);
+
+                .visibleProfile_navbar {
+                  display: flex;
+                  flex-direction: row;
+                  gap: 3px;
+
+                  .count {
+                    color: themed("textColor");
+                  }
+                }
+              }
+            }
+            .count {
+              font-size: 14px;
+              margin: 2px;
+            }
+            .count_true {
+              // font-size: 14px;
+              // margin: 2px;
+            }
+          }
+          .likes:hover {
+            background: themed("borLikesHover");
+          }
+        }
+        .comment_right_block_btn {
+          width: 20px;
+          height: 20px;
+          display: flex;
+          position: relative;
+          .btn_span {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+          }
+          .btn_span:hover {
+            border-radius: 50%;
+            background: themed("bgSoft");
+          }
+          .delete_comment {
+            position: absolute;
+            left: -85px;
+            top: 25px;
+            width: max-content;
+            height: max-content;
+            padding: 10px 20px;
+            background: themed("borLikes");
+            border-radius: 10px;
+            z-index: 20;
+            span {
+              display: flex;
+              width: max-content;
+              padding: 10px;
+              border-radius: 3px;
+              cursor: pointer;
+            }
+            span:hover {
+              background: themed("borLikesHover");
+            }
+          }
+        }
+      }
+      .comment_btn {
+        display: flex;
+        gap: 15px;
+        font-size: 12px;
+        span:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

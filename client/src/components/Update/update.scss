@@ -1,0 +1,127 @@
+@import "../../style.scss";
+
+.update {
+  @include themify($themes) {
+    border: 1px solid grey;
+    background-color: themed("bg");
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 30%;
+    height: 600px;
+    color: themed("textColor");
+    //background-color: white;
+    padding: 30px;
+    z-index: 999;
+
+    .updateClose {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      opacity: 0.4;
+      span {
+        cursor: pointer;
+      }
+    }
+
+    .cover__pic {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      .hidden {
+        opacity: 0;
+        height: 0;
+        width: 0;
+        line-height: 0;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+      }
+
+      .image {
+        .cover {
+          border: 1px solid grey;
+          height: 250px;
+          position: relative;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .profile {
+          width: 150px;
+          height: 150px;
+          border: 1px solid grey;
+          border-radius: 50%;
+          object-fit: cover;
+          position: absolute;
+          left: 0;
+          right: 0;
+          margin: auto;
+          top: 240px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+          }
+        }
+      }
+      .button {
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+
+    button {
+      border: none;
+      background-color: #5271ff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .form {
+      //border: 1px solid grey;
+
+      padding: 15px;
+      width: 45%;
+      margin: auto;
+      padding: 0 30px 0 30px;
+      display: flex;
+      flex-direction: column;
+      margin-top: 40px;
+
+      .info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 30px;
+        input {
+          margin: 0;
+          width: 65%;
+          height: 24px;
+          background-color: transparent;
+          color: themed("textColor");
+          border: 1px solid themed("border");
+        }
+        div {
+          font-size: 16px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+  .upload {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+  }
+}

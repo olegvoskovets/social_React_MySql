@@ -1,0 +1,8 @@
+@import "../../../style.scss";
+
+.commentList {
+  @include themify($themes) {
+    display: flex;flex-direction: column;
+    gap: 10px;
+  }
+}

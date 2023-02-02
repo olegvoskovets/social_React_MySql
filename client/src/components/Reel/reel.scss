@@ -1,0 +1,52 @@
+@import "../../style.scss";
+
+.reel {
+  @include themify($themes) {
+    // flex: 1;
+    overflow: hidden;
+    min-width: 130px;
+    max-width: 130px;
+    height: 220px;
+    border-radius: 10px;
+    border: 1px solid grey;
+    box-sizing: border-box;
+    position: relative;
+
+    .reel_img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .reel_avatar {
+      width: 40px;
+      height: 40px;
+
+      position: absolute;
+
+      left: 20px;
+      top: 20px;
+      img {
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid themed("bgSoft");
+      }
+    }
+    .reel_info {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+
+      span {
+        width: 80%;
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+  }
+}

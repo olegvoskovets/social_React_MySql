@@ -1,0 +1,27 @@
+@import "../../style.scss";
+
+.game__inform {
+  @include themify($themes) {
+    background-color: themed("bg");
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 50%;
+    height: 50%;
+    color: themed("textColor");
+    //background-color: white;
+    padding: 50px;
+    z-index: 999;
+  }
+  button {
+    border: none;
+    background-color: #5271ff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}

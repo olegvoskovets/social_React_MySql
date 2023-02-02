@@ -1,0 +1,46 @@
+@import "../../style.scss";
+
+.reelsList {
+  @include themify($themes) {
+    // width: 100%;
+
+    display: flex;
+    height: 220px;
+    gap: 10px;
+    // padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+    overflow: hidden;
+    position: relative;
+
+    .reelsList_btn {
+      width: 100%;
+      height: 50px;
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      top: 90px;
+      .arrow_btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: themed("bgSoft");
+        margin: 0 35px 0 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        .reelsList_back {
+        }
+        .reelsList_forvard {
+        }
+      }
+      .arrow_btn:hover {
+        background-color: themed("bg");
+      }
+    }
+  }
+}
