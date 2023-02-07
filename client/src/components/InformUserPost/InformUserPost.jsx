@@ -1,28 +1,29 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./informUserPost.scss";
 import { getUser } from "../../store/Users.js";
-import { getCommonFriends } from "../../store/Friends.js";
+import { getCommonFriends, orFriends } from "../../store/Friends.js";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 const InformUserPost = ({ id, Myclass }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.usersReducer.usersSlice);
-  //const [friend, setFriend] = useState(false);
+  const { friend } = useSelector((state) => state.friendsReducer.friendsSlice);
   const { commonFriends } = useSelector(
     (state) => state.friendsReducer.friendsSlice
   );
   const { currentUser } = useSelector((state) => state.authReducer.authSlice);
-
+  // const [yesFriend, setYesFriend] = useState(false);
   useEffect(() => {
     dispatch(getUser(id));
-
     dispatch(getCommonFriends({ id: currentUser.id, id_friend: id }));
-
+    dispatch(orFriends({ id: currentUser.id, id_friend: id }));
+    // yesFriend(friend);
     // getcommonFriendsFetch({ id: currentUser.id, id_friend: id });
     // addcommonFriends({ id: currentUser.id, id_friend: id });
   }, []);
-
+  // console.log("friend? ", yesFriend);
   return (
     <div className={"informUserPost " + Myclass}>
       <div className="informUserPost_header">
@@ -58,7 +59,9 @@ const InformUserPost = ({ id, Myclass }) => {
       {currentUser.id !== id && (
         <div className="informUserPost_btn">
           <div className="informUserPost_btn_message">Повідомлення</div>
-          <div className="informUserPost_btn_addField">Додати друга</div>
+          <div className="informUserPost_btn_addField">
+            {friend ? "Ви друзі" : "Запросити дружити"}
+          </div>
           <div className="informUserPost_btn_toBlock">...</div>
         </div>
       )}

@@ -15,6 +15,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getUserProfile } from "../../store/Users";
+import { getCommonFriends, orFriends } from "../../store/Friends.js";
 
 import { useDispatch, useSelector } from "react-redux";
 import Update from "../../components/Update/Update";
@@ -24,7 +25,10 @@ const Profile = () => {
   const userId = parseInt(useLocation().pathname.split("/")[2]);
   const dispatch = useDispatch();
   // const [userProfile, setUserProfile] = useState([]);
-
+  const { friend } = useSelector((state) => state.friendsReducer.friendsSlice);
+  const { commonFriends } = useSelector(
+    (state) => state.friendsReducer.friendsSlice
+  );
   const { userProfile, loading } = useSelector(
     (state) => state.usersReducer.usersSlice
   );
@@ -34,6 +38,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(getUserProfile(userId));
+    dispatch(orFriends({ id: currentUser.id, id_friend: userId }));
   }, [userId, newCurrentUser]); // тут надо изменить чтоби диспачить профайл подругому
   // newCurrentUser && dispatch(getUserProfile(userId));
 
@@ -107,6 +112,8 @@ const Profile = () => {
                     ) : (
                       <button>follow</button>
                     )}
+
+                    <button>{friend ? "Ви друзі" : "Запросити дружити"}</button>
                   </div>
                   <div className="right">
                     <EmailOutlinedIcon />

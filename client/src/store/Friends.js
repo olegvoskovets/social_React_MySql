@@ -33,13 +33,29 @@ export const getAllFriendsUserIdRequests = createAsyncThunk(
 export const getCommonFriends = createAsyncThunk(
   "friends/getCommonFriends",
   async (values) => {
-    console.log("value_getCommonFriends: ", { ...values });
+    // console.log("value_getCommonFriends: ", { ...values });
     try {
       const res = await axios.post("http://localhost:8800/api/friends", values);
 
       return await res.data;
     } catch (error) {
       return console.log("Не вдалось загрузити спільних  друзів");
+    }
+  }
+);
+export const orFriends = createAsyncThunk(
+  "friends/orFriends",
+  async (values) => {
+    // console.log("value_getCommonFriends: ", { ...values });
+    try {
+      const res = await axios.post(
+        "http://localhost:8800/api/friends/or_friends",
+        values
+      );
+
+      return await res.data;
+    } catch (error) {
+      return console.log("Не вдалось загрузити данні");
     }
   }
 );
@@ -50,6 +66,7 @@ const friendsSlice = createSlice({
     friends: [],
     requests_friends: [],
     commonFriends: [],
+    friend: null,
     loading: true,
     error: null,
   },
@@ -83,7 +100,7 @@ const friendsSlice = createSlice({
         state.error = null;
       })
       .addCase(getCommonFriends.fulfilled, (state, action) => {
-        console.log("action payload typeof: ", typeof action.payload);
+        // console.log("action payload typeof: ", typeof action.payload);
         typeof action.payload === "object"
           ? (state.commonFriends = action.payload)
           : (state.commonFriends = []);
@@ -91,6 +108,18 @@ const friendsSlice = createSlice({
         state.loading = false;
       })
       .addCase(getCommonFriends.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(orFriends.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(orFriends.fulfilled, (state, action) => {
+        // console.log("action payload typeof: ", typeof action.payload);
+        state.friend = action.payload;
+        state.loading = false;
+      })
+      .addCase(orFriends.rejected, (state, action) => {
         state.loading = false;
       });
   },
