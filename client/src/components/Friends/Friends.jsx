@@ -45,12 +45,12 @@ const Friends = () => {
     setRequestFriends(false);
     setBirthdays(true);
   };
-  console.log(
-    "visible = friendsCurrentUser",
-    friendsCurrentUser,
-    "  requestFriends",
-    requestFriends
-  );
+  // console.log(
+  //   "visible = friendsCurrentUser",
+  //   friendsCurrentUser,
+  //   "  requestFriends",
+  //   requestFriends
+  // );
   return (
     <div className="friends">
       <div className="friends-left">

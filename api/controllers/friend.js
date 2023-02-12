@@ -1,10 +1,10 @@
+import { json } from "express";
 import { db } from "../connect.js";
 
 export const getAllFriendUserId = (req, res) => {
   const q = `SELECT u.name,u.profilePic,u.id 
   FROM friends AS f 
-  INNER JOIN users AS u
-   
+  INNER JOIN users AS u 
    ON u.id=f.userId_friend 
   WHERE f.userId=?
   AND f.reply=true  
@@ -15,25 +15,16 @@ export const getAllFriendUserId = (req, res) => {
     return res.status(200).json(data);
   });
 };
-
+// кто робив запит на друга?
 export const getAllFriendUserIdRequests = (req, res) => {
-  // const q = `SELECT u.name,u.profilePic,u.id,f.id AS requestId
-  //   FROM friends AS f
-  //   INNER JOIN users AS u
-  //   INNER JOIN users AS u_f
-  //   ON u.id=f.userId AND f.userId_friend=u_f.id
-  //   WHERE f.userId_friend=?
-  //   AND f.reply=false
-  //   `;
   const q = `SELECT u.name,u.profilePic,u.id ,f.id AS requestId
-  FROM friends AS f 
+  FROM friends AS f
   INNER JOIN users AS u
-   
-   ON u.id=f.userId_friend 
-  WHERE f.userId=?
-  AND f.reply=false    
-  `;
-  const values = [req.params.userId];
+   ON u.id=f.userId
+  WHERE f.userId_friend=?
+  AND f.reply=false    `;
+
+  let values = [req.params.userId];
 
   db.query(q, [values], (err, data) => {
     if (err) return res.status(500).json(err);
@@ -41,43 +32,85 @@ export const getAllFriendUserIdRequests = (req, res) => {
   });
 };
 //UPDATE posts SET `userId`=?,`post_on_the_user_page`=?,`title`=?,`image`=?,`last_update`=? WHERE `id`=?
+//положительна відповідь на запити стати друзями
+//ви повинні перевірити можливо ви теж давали на запит стати друзями
+//і треба зробити запісь в базу від ще вашого імені
+
 export const confirmRequestsFriend = (req, res) => {
-  const q = `UPDATE  friends SET watched=true, reply=true WHERE id=? `;
-  const values = [req.params.id];
+  let q = `UPDATE  friends SET watched=true, reply=true WHERE id=? `;
+  let values = [req.params.id];
   db.query(q, [values], (err, data) => {
     if (err) return res.status(500).json(err);
-    return res.status(200).json("Ви підтвердили запит стати друзями");
+    //ми підтвердили запит на дружбу, тепер треба зробити запис що і ви його друг
+    // перед цим перевірити може ваш запити на друга теж існує
+    q = `SELECT * FROM friends WHERE userId=${req.body.userId} and userId_friend=${req.body.userId_friend}`;
+
+    db.query(q, [], (err, data) => {
+      if (err) return res.status(500).json(err);
+
+      if (data.length > 0) {
+        q = `UPDATE  friends SET watched=true, reply=true  WHERE userId=${req.body.userId} and userId_friend=${req.body.userId_friend} `;
+        db.query(q, [], (err, data) => {
+          if (err) return res.status(500).json(err);
+          return res.json("Ви стали друзями");
+        });
+      } else {
+        values = [req.body.userId, req.body.userId_friend, true, true];
+        if (data) {
+          q =
+            "INSERT INTO friends (`userId`,`userId_friend`,`watched`,`reply`)  VALUE (?) "; //,
+          db.query(q, [values], (err, data) => {
+            if (err) {
+              return res.status(500).json(err);
+            } else {
+              return res.status(200).json("Ви друзі");
+            }
+          });
+        }
+      }
+    });
   });
 };
+//INSERT INTO posts (`userId`,`post_on_the_user_page`,`title`,`image`,`creation_post`) VALUE (?)
+//
+export const inviteToBeFriends = (req, res) => {
+  let q = "INSERT INTO friends (`userId`,`userId_friend`) VALUE (?)";
+  const values = [req.body.userId, req.body.userId_friend];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.status(200).json("Ви запросили дружити");
+  });
+};
+
 export const getRequestsFriend = (req, res) => {
   //може бути три відповіді
-  //1. немає данних . відповідь false
+  //1. немає данних . відповідь "Запросити дружити"
   //2/ ви запросили дружити а він ще не відповів. відповіь "Чекєте відповіді"
   //3. вас запросили дружити а ви не відповіли . відповідь "Підтвердити"
   let q = `SELECT reply FROM friends WHERE userId=? AND userId_friend=?  `; //можливо ми подавали запит на дружбу
   const values = [req.body.id, req.body.id_friend];
   db.query(q, [...values], (err, data) => {
-    console.log("data1 = ", data[0], " values ", values);
     if (err) return res.status(500).json(err);
-    // if (data[0] === undefined) return res.status(200).json(false);
-    if (data[0].reply === 0) {
-      // Значит ми запрошували дружити
-      return res.status(200).json("Чекєте відповіді");
-    } else {
-      //можливо нас запрошували дружити
-      q = `SELECT reply FROM friends WHERE userId_friend=? AND userId=? `;
+    if (data[0] === undefined) {
+      //можливо нам подавали запити на друзів
+      q = `SELECT id, reply FROM friends WHERE userId_friend=? AND userId=? `;
 
       db.query(q, [...values], (err, data) => {
-        console.log("data2 = ", data[0], " values ", values);
+        // console.log("data2 = ", data[0], " values ", values);
         if (err) return res.status(500).json(err);
-        //if (data[0] === undefined) return res.status(200).json(false);
-        if (data[0].reply === 0) {
-          //значит нас запрошували дружити
-          return res.status(200).json("Підтвердити");
+        if (data[0] === undefined) {
+          //то нам також не подавали запит на дружбу
+          return res.json({ message: "Запросити дружити" });
         } else {
-          return res.status(200).json(false);
+          //нам подавали запит на дружбу
+          console.log("idrequst", data[0]);
+          return res.json({ id: data[0].id, message: "Підтвердити дружбу" });
         }
       });
+    } else {
+      return res
+        .status(200)
+        .json({ id: data[0].id, message: "Чекaєте відповіді" });
     }
   });
 };
@@ -89,7 +122,7 @@ export const deleteRequestFriend = (req, res) => {
     return res.status(200).json("Ви видалили запит стати друзями");
   });
 };
-
+//пошук спільних друзів
 export const commonFriends = (req, res) => {
   if (req.body.id !== req.body.id_friend) {
     const q = `SELECT u.name ,u.profilePic
@@ -149,5 +182,18 @@ export const orFriends = (req, res) => {
       return res.status(200).json(false);
     }
     return res.status(200).json(false);
+  });
+};
+export const deleteFriend = (req, res) => {
+  let q = `DELETE  FROM friends  WHERE  userId=? AND userId_friend=? `;
+  let values = [req.body.userId, req.body.userId_friend];
+  db.query(q, [...values], (err, data) => {
+    if (err) return res.status(500).json(err);
+    //видаляємо також і данні друга по моєму userId_friend
+    values = [req.body.userId_friend, req.body.userId];
+    db.query(q, [...values], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("Видалили друга ...");
+    });
   });
 };

@@ -7,6 +7,7 @@ import "./itemFriendRequest.scss";
 //підтверджуємо запит стати друзями
 
 const ItemFriendRequest = ({ friend_request }) => {
+  console.log("friend_request: ", friend_request);
   const [visible_Btn_Confirm, setVisible_Btn_Confirm] = useState(true);
   const [visible_Btn_Delete, setVisible_Btn_Delete] = useState(true);
   const { currentUser } = useSelector((state) => state.authReducer.authSlice);
@@ -14,7 +15,10 @@ const ItemFriendRequest = ({ friend_request }) => {
 
   const handleClickConfirm = async (id) => {
     try {
-      await axios.put("http://localhost:8800/api/friends/requests/" + id);
+      await axios.put("http://localhost:8800/api/friends/requests/" + id, {
+        userId: currentUser.id,
+        userId_friend: friend_request.id,
+      });
       setVisible_Btn_Confirm(false);
       dispatch(getAllFriendsUserId(currentUser.id));
     } catch (error) {

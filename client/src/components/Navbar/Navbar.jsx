@@ -44,6 +44,9 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="left">
+        {/* <div className="logo">
+          <img src="images/logo.png" alt="" />
+        </div> */}
         <Link to={"/"} style={{ textDecoration: "none" }}>
           <span>Snake social</span>
         </Link>
@@ -81,7 +84,10 @@ const Navbar = () => {
               <span>{currentUser?.name}</span>
 
               <button className="auth" onClick={handleLogOut}>
-                Вийти
+                <Link to={"/"}>
+                  {" "}
+                  <span className="auth_text">Вийти</span>
+                </Link>
               </button>
             </>
           ) : (

@@ -43,8 +43,9 @@ const LeftBar = () => {
                   <img src={"/upload/" + currentUser.profilePic} alt="" />
                   // {"/upload/" + winner.profilePic}
                 )}
+
                 <Link
-                  to={`/profile/${currentUser.id}`}
+                  to={currentUser && `/profile/${currentUser.id}`}
                   style={{ textDecoration: "none" }}
                 >
                   <span>{currentUser?.name}</span>

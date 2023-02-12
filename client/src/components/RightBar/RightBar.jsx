@@ -15,6 +15,7 @@ const RightBar = () => {
   //const [gameCountWinner, setGameCountWinner] = useState([]);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.authReducer.authSlice);
 
   // const gameCountWinner = useSelector(
   //   (state) => state.gameCountWinnerReducer.gameCountWinnerSlice.gameCountWinner
@@ -72,7 +73,7 @@ const RightBar = () => {
                 )}
 
                 <Link
-                  to={`/profile/${winner.id}`}
+                  to={currentUser && `/profile/${winner.id}`}
                   style={{ textDecoration: "none" }}
                 >
                   <span>{winner.name}</span>
@@ -108,7 +109,7 @@ const RightBar = () => {
 
                   <p>
                     <Link
-                      to={`/profile/${user.id}`}
+                      to={currentUser && `/profile/${user.id}`}
                       style={{ textDecoration: "none" }}
                     >
                       <span>{user.name}</span>

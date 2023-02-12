@@ -10,7 +10,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import GamesUser from "../GamesUser/GamesUser";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -33,15 +33,75 @@ const Profile = () => {
     (state) => state.usersReducer.usersSlice
   );
   const { currentUser } = useSelector((state) => state.authReducer.authSlice);
+  const { requests_friends } = useSelector(
+    (state) => state.friendsReducer.friendsSlice
+  );
   const [openUpdate, setOpenUpdate] = useState(false);
   const [newCurrentUser, setNewCurrentUser] = useState(false);
+  const [requestOpcion, setRequestOpcion] = useState("Запросити дружити");
 
   useEffect(() => {
     dispatch(getUserProfile(userId));
+
     dispatch(orFriends({ id: currentUser.id, id_friend: userId }));
-  }, [userId, newCurrentUser]); // тут надо изменить чтоби диспачить профайл подругому
+    whatRequests();
+  }, [userId, newCurrentUser, setRequestOpcion]); // тут надо изменить чтоби диспачить профайл подругому
   // newCurrentUser && dispatch(getUserProfile(userId));
 
+  //console.log("requestOpcion: ", requestOpcion);
+
+  const inviteToBeFriends = async (opsion) => {
+    // console.log("opcion=== ", opsion);
+    if (opsion === "Запросити дружити") {
+      await axios
+        .post("http://localhost:8800/api/friends/invite", {
+          userId: currentUser.id,
+          userId_friend: userId,
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
+      whatRequests();
+      //запрсити дружити
+    } else if (opsion === "Підтвердити дружбу") {
+      await axios.put(
+        "http://localhost:8800/api/friends/requests/" + requestOpcion.id,
+        {
+          userId: currentUser.id,
+          userId_friend: userId,
+        }
+      );
+      dispatch(orFriends({ id: currentUser.id, id_friend: userId }));
+      whatRequests();
+    } else if (opsion === "Чекaєте відповіді") {
+      // console.log(opsion);
+    } else {
+      let values;
+      await axios.delete("http://localhost:8800/api/friends", {
+        data: {
+          userId: currentUser.id,
+          userId_friend: userId,
+        },
+      });
+      dispatch(orFriends({ id: currentUser.id, id_friend: userId }));
+      whatRequests();
+    }
+  };
+
+  const whatRequests = async () => {
+    await axios
+      .post("http://localhost:8800/api/friends/getRequestsFriend", {
+        id: currentUser.id,
+        id_friend: userId,
+      })
+      .then((res) => {
+        console.log("data: ", res.data.message);
+        //return res.data;
+        setRequestOpcion(res.data);
+      });
+  };
+  console.log("data = ", requestOpcion.message);
+  console.log("friend = ", friend);
   return (
     <div className="profile">
       {loading ? (
@@ -113,7 +173,18 @@ const Profile = () => {
                       <button>follow</button>
                     )}
 
-                    <button>{friend ? "Ви друзі" : "Запросити дружити"}</button>
+                    {userProfile.id !== currentUser.id && (
+                      <button
+                        onClick={() =>
+                          inviteToBeFriends(
+                            friend ? "Ви друзі" : requestOpcion.message
+                          )
+                        }
+                      >
+                        {friend ? "Ви друзі. Видалити?" : requestOpcion.message}
+                        {/*  whatRequests()*/}
+                      </button>
+                    )}
                   </div>
                   <div className="right">
                     <EmailOutlinedIcon />
